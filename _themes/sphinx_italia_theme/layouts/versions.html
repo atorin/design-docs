@@ -1,0 +1,32 @@
+{# if READTHEDOCS #}
+{# Add rst-badge after rst-versions for small badge style. #}
+  <div class="rst-versions shift-up" role="note" aria-label="versions">
+    {#<span class="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: {{ current_version }}
+    </span>#}
+    <div class="rst-other-versions">
+      <dl>
+        <dt class="u-inline rst-versions--terms">{{ _('Versions') }}</dt>
+        {% for slug, url in versions %}
+          <dd><a href="{{ url }}">{{ slug }}</a></dd>
+        {% endfor %}
+      </dl>
+      <dl>
+        <dt class="u-inline rst-versions--terms">{{ _('Downloads') }}</dt>
+        {% for type, url in downloads %}
+          <dd><a href="{{ url }}">{{ type }}</a></dd>
+        {% endfor %}
+      </dl>
+      {#<dl>
+        <dt class="u-inline">{{ _('On Read the Docs') }}</dt>
+        <dd>
+          <a href="//{{ PRODUCTION_DOMAIN }}/projects/{{ slug }}/?fromdocs={{ slug }}">{{ _('Project Home') }}</a>
+        </dd>
+        <dd>
+          <a href="//{{ PRODUCTION_DOMAIN }}/builds/{{ slug }}/?fromdocs={{ slug }}">{{ _('Builds') }}</a>
+        </dd>
+      </dl>#}
+    </div>
+  </div>
+{# endif #}
