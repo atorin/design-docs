@@ -5365,16 +5365,16 @@ footer span.commit code, footer span.commit .rst-content tt, .rst-content footer
   background-color: #F1C40F;
   color: #000;
 }
-.rst-versions.shift-up .rst-other-versions {
+.rst-versions.shift-up .rst-other-versions--custom {
   display: block;
 }
-.rst-versions .rst-other-versions {
+.rst-versions .rst-other-versions--custom {
   font-size: 90%;
   padding: 12px;
   color: gray;
   display: none;
 }
-.rst-versions .rst-other-versions hr {
+.rst-versions .rst-other-versions--custom hr {
   display: block;
   height: 1px;
   border: 0;
@@ -5382,11 +5382,11 @@ footer span.commit code, footer span.commit .rst-content tt, .rst-content footer
   padding: 0;
   border-top: solid 1px #272d32;
 }
-.rst-versions .rst-other-versions dd {
+.rst-versions .rst-other-versions--custom dd {
   display: inline-block;
   margin: 0;
 }
-.rst-versions .rst-other-versions dd a {
+.rst-versions .rst-other-versions--custom dd a {
   display: inline-block;
   padding: 6px;
   color: #fff;
@@ -6004,11 +6004,11 @@ button[disabled] {
 .rst-versions .rst-current-version {
   background-color: transparent !important;
 }
-.rst-versions .rst-other-versions {
+.rst-versions .rst-other-versions--custom {
   padding-top: 0;
   padding-bottom: 0;
 }
-.rst-versions .rst-other-versions .rst-versions--terms {
+.rst-versions .rst-other-versions--custom .rst-versions--terms {
   line-height: 50px;
 }
 
