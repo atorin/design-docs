@@ -6010,8 +6010,11 @@ button[disabled] {
 .rst-versions .rst-other-versions--no-inject {
   padding: 0;
 }
-.rst-versions .rst-other-versions--no-inject .rst-versions--terms {
+.rst-versions .rst-other-versions--no-inject .rst-versions--terms, .rst-versions .rst-other-versions--no-inject .rst-versions--definitions {
   margin: 10px 0;
+}
+.rst-versions .rst-other-versions--no-inject .rst-versions--terms {
+  text-align: center;
 }
 .rst-versions .rst-other-versions--no-inject .rst-versions--terms span {
   color: #f6f9fc;
