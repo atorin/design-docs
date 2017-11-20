@@ -108,6 +108,32 @@ html_theme = 'sphinx_italia_theme'
 
 html_theme_path = ["_themes", ]
 
+# Theme options are theme-specific and customize the look and feel of a theme
+# further.  For a list of options available for each theme, see the
+# documentation.
+html_theme_options = {
+    # If the project is meant to be a different style project, enable this
+    # layout instead of the default one.
+    # Available options are: (default), 'page_home', 'page_project'
+    'layout': 'default',
+    'versions': {
+        '0.2.4': '0.2.4',
+        '4.0': '4.0',
+    },
+    'superproject': {
+        'id': 8,
+        'name': 'ANPR',
+        'slug': 'anpr',
+        'url': '//docs/anpr',
+    }
+}
+
+if rtd_project == 'template-super':
+    html_theme_options['layout'] = 'page_home'
+
+if rtd_project == 'template-sub':
+    html_theme_options['layout'] = 'page_project'
+
 # -- ReadTheDoc requirements and local template generation---------------------
 
 # on_rtd is whether we are on readthedocs.org, this line of code grabbed from docs.readthedocs.org
