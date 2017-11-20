@@ -1,10 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import sys
-import os
+import sys, os
+from os.path import abspath, join, dirname
+
+#sys.path.insert(0, os.path.abspath(join(dirname(__file__))))
+#sys.path.insert(0, os.path.abspath('.'))
+#sys.path.insert(0, os.path.abspath('./test_py_module'))
+#sys.path.insert(0, os.path.abspath('../..'))
+
+sys.path.append('.')
+
 sys.path.append('./versioning')
 from github_releases import get_latest_release
+
+# data loader
+import loadsitedata
 
 # -- PROJECT Variables ----------------------------------------------------
 settings_project_name = 'Linee guida di design per i servizi digitali della PA'
@@ -15,9 +26,30 @@ settings_doc_release = settings_doc_version
 settings_basename = 'LineeGuidaWebPA'
 settings_file_name = 'Linee-Guida-Web-PA'
 
-# Add any Sphinx extension module names here, as strings. They can be
-# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
-# ones.
+# -- RTD configuration ------------------------------------------------
+
+# on_rtd is whether we are on readthedocs.org, this line of code grabbed from docs.readthedocs.org
+on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+
+# This is used for linking and such so we link to the thing we're building
+rtd_version = os.environ.get('READTHEDOCS_VERSION', 'latest')
+if rtd_version not in ['stable', 'latest']:
+    rtd_version = 'stable'
+
+rtd_project = os.environ.get('READTHEDOCS_PROJECT', '')
+
+# If extensions (or modules to document with autodoc) are in another directory,
+# add these directories to sys.path here. If the directory is relative to the
+# documentation root, use os.path.abspath to make it absolute, like shown here.
+#sys.path.insert(0, os.path.abspath('.'))
+
+# -- General configuration -----------------------------------------------------
+
+# If your documentation needs a minimal Sphinx version, state it here.
+#needs_sphinx = '1.0'
+
+# Add any Sphinx extension module names here, as strings. They can be extensions
+# coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
@@ -76,6 +108,32 @@ html_theme = 'sphinx_italia_theme'
 
 html_theme_path = ["_themes", ]
 
+# Theme options are theme-specific and customize the look and feel of a theme
+# further.  For a list of options available for each theme, see the
+# documentation.
+html_theme_options = {
+    # If the project is meant to be a different style project, enable this
+    # layout instead of the default one.
+    # Available options are: (default), 'page_home', 'page_project'
+    'layout': 'default',
+    'versions': {
+        '0.2.4': '0.2.4',
+        '4.0': '4.0',
+    },
+    'superproject': {
+        'id': 8,
+        'name': 'ANPR',
+        'slug': 'anpr',
+        'url': '//docs/anpr',
+    }
+}
+
+if rtd_project == 'template-super':
+    html_theme_options['layout'] = 'page_home'
+
+if rtd_project == 'template-sub':
+    html_theme_options['layout'] = 'page_project'
+
 # -- ReadTheDoc requirements and local template generation---------------------
 
 # on_rtd is whether we are on readthedocs.org, this line of code grabbed from docs.readthedocs.org
@@ -87,6 +145,32 @@ if not on_rtd:  # only import and set the theme if we're building docs locally
 else:
     # Override default css to get a larger width for ReadTheDoc build
     html_context = {
+        'subproject_data': [
+                {
+                    'id': 1,
+                    'name': 'Project A',
+                    'slug': 'project-a',
+                    'description': '''Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non lectus ut elit consectetur posuere. Maecenas euismod lorem vitae libero porttitor hendrerit.''',
+                    'version': 'v1.0',
+                    'url': '//',
+                },
+                {
+                    'id': 2,
+                    'name': 'Project B',
+                    'slug': 'project-b',
+                    'description': '''Duis lobortis dui non justo vulputate luctus. Donec lorem nunc, tempus sodales urna in, porttitor condimentum nisl. Vivamus non est egestas, tristique est id, rhoncus orci.''',
+                    'version': 'v1.0',
+                    'url': '//',
+                },
+                {
+                    'id': 3,
+                    'name': 'Project C',
+                    'slug': 'project-c',
+                    'description': '''Integer tempus, mi eget rhoncus mattis, leo felis commodo nunc, a porttitor nisi lorem nec mi. Donec hendrerit cursus lorem. Maecenas cursus dui at risus ornare, nec vehicula ligula condimentum.''',
+                    'version': 'v1.0',
+                    'url': '//',
+                },
+            ],
         'css_files': [
             '_static/css/theme.css',
             '_static/css/custom.css',
@@ -229,3 +313,20 @@ texinfo_documents = [
    settings_copyright_copyleft, settings_project_name, settings_project_name,
    'Miscellaneous'),
 ]
+
+# Documents to append as an appendix to all manuals.
+#texinfo_appendices = []
+
+# If false, no module index is generated.
+#texinfo_domain_indices = True
+
+# How to display URL addresses: 'footnote', 'no', or 'inline'.
+#texinfo_show_urls = 'footnote'
+
+intersphinx_mapping = {
+    'template-sub': ('http://template-sub.readthedocs.io/en/%s/' % rtd_version, None),
+}
+
+def setup(app):
+    app.site_data = loadsitedata.load_site_data(html_theme)
+    app.connect('html-page-context', loadsitedata.html_page_context_listener)
