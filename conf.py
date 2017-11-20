@@ -128,7 +128,7 @@ html_theme_options = {
     }
 }
 
-if rtd_project == 'template-super':
+if rtd_project == 'design-docs':
     html_theme_options['layout'] = 'page_home'
 
 if rtd_project == 'template-sub':
